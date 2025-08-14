@@ -71,6 +71,8 @@ app.post('/reply', (req, res) => {
   });
 });
 
-server.listen(3000, () => {
-  console.log('伺服器已啟動：http://localhost:3000');
+// 改成 Render 支援的 Port
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
+  console.log(`伺服器已啟動：http://localhost:${PORT}`);
 });
