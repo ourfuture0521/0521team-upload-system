@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<title>管理員後台</title>
+<script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+<h1>管理員後台</h1>
+<div id="uploads"></div>
+
+<script>
+const socket = io();
+
+function loadData() {
+  fetch('/admin-data')
+    .then(res => res.json())
+    .then(data => {
+      const div = document.getElementById('uploads');
+      div.innerHTML = '';
+      data.forEach(item => {
+        div.innerHTML += `
+          <div style="border:1px solid #ccc;margin:10px;padding:10px;">
+            <b>${item.name}</b>: ${item.message}<br>
+            ${item.file ? `<a href="/uploads/${item.file}" download>下載檔案</a>` : '無檔案'}<br>
+            管理員回覆：${item.reply || '尚未回覆'}<br>
+            <input type="text" id="reply-${item.id}" placeholder="輸入回覆">
+            <button onclick="sendReply(${item.id})">送出回覆</button>
+          </div>
+        `;
+      });
+    });
+}
+
+function sendReply(id) {
+  const reply = document.getElementById(`reply-${id}`).value;
+  fetch('/reply', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ id, reply })
+  }).then(() => loadData());
+}
+
+socket.on('newUpload', () => loadData());
+socket.on('newReply', () => loadData());
+
+loadData();
+</script>
+</body>
+</html>
