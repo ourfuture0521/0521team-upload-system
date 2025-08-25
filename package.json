@@ -1,0 +1,24 @@
+{
+  "name": "team-upload-system",
+  "version": "1.0.0",
+  "description": "Team upload system with email verification, admin panel, file whitelist, and member management",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-session": "^1.17.3",
+    "mongoose": "^8.18.0",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.13",
+    "socket.io": "^4.7.5"
+  }
+}
